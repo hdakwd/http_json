@@ -9,6 +9,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -63,7 +67,9 @@ public class MainActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                editTextResponse.setText(String.valueOf(str));
+                                editTextResponse.setText(
+                                        Json_Ana(String.valueOf(str))
+                                );
                                 textViewTime.setText("処理時間：" + (endTime - startTime) + "ms");
                             }
                         });
@@ -84,5 +90,20 @@ public class MainActivity extends AppCompatActivity {
             br.close();
             return sb.toString();
         }
+
+        public String Json_Ana(String str) {
+            String display = "";
+
+            try {
+                JSONObject json = new JSONObject(str);
+                display = json.toString(4);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return display;
+        }
+
+
     }
 }
